@@ -1,5 +1,17 @@
 # preset-chrome
 
+[![npm version](https://img.shields.io/npm/v/@redhat-customer-portal/preset-chrome)](https://www.npmjs.com/package/@redhat-customer-portal/preset-chrome)
+
+This preset is helping the people who want to integrate [Red Hat Customer Portal](https://access.redhat.com) Header/Footer in their app.
+
+It will make your local development has an easy life
+
+## Installation
+
+```shell
+npm install -D @redhat-customer-portal/preset-chrome
+```
+
 ## Usage
 
 ### Setup environment variables
@@ -12,7 +24,13 @@ export HTTP_PROXY=$http_proxy
 export HTTPS_PROXY=$http_proxy
 ```
 
-### Intergration
+### Setup `/etc/hosts`, you won't need to do this if you already are the [spandx](https://github.com/redhataccess/spandx) user
+
+**`/etc/hosts`**
+```
+127.0.0.1 dev.foo.redhat.com qa.foo.redhat.com stage.foo.redhat.com prod.foo.redhat.com
+```
+
 
 **`index.html`**
 ```html
@@ -29,7 +47,7 @@ export HTTPS_PROXY=$http_proxy
     <div class="container">
       <div id="chrometwo">
         <div id="root">
-          Hello world
+          Your content
         </div>
       </div>
     </div>
@@ -38,6 +56,8 @@ export HTTPS_PROXY=$http_proxy
   </body>
 </html>
 ```
+
+### Local Development
 
 #### **Create React App**
 
@@ -67,3 +87,64 @@ app.listen(3000, () => {
   console.log(`server is running`);
 });
 ```
+
+### Enjoy
+
+You can using following host to view your app
+Each of them will mapping the specific environment of [Customer Portal](https://access.redhat.com)
+
+* dev.foo.redhat.com
+* qa.foo.redhat.com
+* stage.foo.redhat.com
+* prod.foo.redhat.com
+
+
+### Server Configuration
+
+Here is the configuration on remote server
+
+#### Apache HTTPD server
+
+Enable [Server Side Includes (SSI)](https://httpd.apache.org/docs/2.4/mod/mod_include.html)
+**`include.conf`**
+```apache
+<IfModule mod_include.c>
+    <Directory "/var/www/html">
+        AddOutputFilter INCLUDES .html
+        Options +Includes
+    </Directory>
+</IfModule>
+```
+
+Setup reverse proxy for chrome path
+**`proxy.conf`**
+```apache
+SSLProxyEngine On
+SSLProxyCheckPeerName off
+SSLProxyCheckPeerCN off
+SSLProxyCheckPeerExpire off
+CacheRoot /tmp
+CacheQuickHandler off
+CacheIgnoreCacheControl on
+
+<Location "/services/chrome">
+    ProxyPass ${PORTAL_ORIGIN}/services/chrome
+    ProxyPassReverse ${PORTAL_ORIGIN}/services/chrome
+    CacheEnable disk
+    CacheDefaultExpire 3600
+    CacheMaxExpire 3600
+    CacheHeader on
+    CacheDetailHeader on
+    CacheMinFileSize 1000
+</Location>
+```
+
+
+## Known Issues
+
+We not have fully SSI command support
+The following commands are works
+
+* echo
+* include
+* set
