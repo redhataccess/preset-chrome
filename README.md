@@ -37,12 +37,10 @@ export HTTPS_PROXY=$http_proxy
 <!DOCTYPE html>
 <html class="no-js nimbus pf-m-redhat-font">
   <head>
-    <!-- SPA_HEAD -->
     <!--#include virtual="/_include_/init.html" -->
     <!--#include virtual="/services/chrome/head/$locale?legacy=false" -->
   </head>
   <body>
-    <!-- SPA_HEADER -->
     <!--#include virtual="/services/chrome/header/$locale?legacy=false" -->
     <div class="container">
       <div id="chrometwo">
@@ -51,7 +49,6 @@ export HTTPS_PROXY=$http_proxy
         </div>
       </div>
     </div>
-    <!-- SPA_FOOTER -->
     <!--#include virtual="/services/chrome/footer/$locale?legacy=false" -->
   </body>
 </html>
@@ -69,6 +66,21 @@ module.exports = (app) => {
   setupChrome(app);
 } 
 
+```
+
+#### **Webpack**
+
+**`webpack.config.js`**
+```javascript
+const setupChrome = require("@redhat-customer-portal/preset-chrome");
+
+module.export = {
+  devServer: {
+    before: (app) => {
+      setupChrome(app);
+    },
+  },
+}
 ```
 
 
