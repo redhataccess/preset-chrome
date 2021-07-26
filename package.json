@@ -1,6 +1,6 @@
 {
   "name": "@redhat-customer-portal/preset-chrome",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "description": "The preset of Red Hat Customer Portal",
   "main": "./dist/index.js",
   "types": "./@types/index.d.ts",
@@ -73,6 +73,6 @@
   "dependencies": {
     "http-proxy-middleware": "^2.0.0",
     "https-proxy-agent": "^5.0.0",
-    "server-side-include": "0.0.1-alpha.4"
+    "server-side-include": "0.0.1-alpha.5"
   }
 }
