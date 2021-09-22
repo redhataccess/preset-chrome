@@ -73,6 +73,6 @@
   "dependencies": {
     "http-proxy-middleware": "^2.0.0",
     "https-proxy-agent": "^5.0.0",
-    "server-side-include": "0.0.1-alpha.6"
+    "server-side-include": "0.0.1-alpha.7"
   }
 }
