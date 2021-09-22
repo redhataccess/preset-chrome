@@ -1,6 +1,6 @@
 {
   "name": "@redhat-customer-portal/preset-chrome",
-  "version": "0.0.1-alpha.3",
+  "version": "0.0.1-alpha.4",
   "description": "The preset of Red Hat Customer Portal",
   "main": "./dist/index.js",
   "types": "./@types/index.d.ts",
