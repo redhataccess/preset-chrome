@@ -4,7 +4,19 @@ import serverSideInclude from 'server-side-include';
 import { getProxyAgent } from './proxy';
 
 const localRegex = /^(dev|qa|stage)\.foo\.redhat\.com/i;
-const chromePaths = ['/services', '/webassets', '/chrome_themes'];
+const reversePaths = [
+  '/api',
+  '/blogs',
+  '/chrome_themes',
+  '/hydra',
+  '/hydrafs',
+  '/login',
+  '/node',
+  '/rs',
+  '/services',
+  '/solutions',
+  '/webassets',
+];
 
 export const setupChrome = (app: Express): void => {
   const reverseProxy = createProxyMiddleware({
@@ -20,7 +32,7 @@ export const setupChrome = (app: Express): void => {
     },
   });
 
-  app.use(chromePaths, reverseProxy);
+  app.use(reversePaths, reverseProxy);
   app.use(
     serverSideInclude({
       getHost: (req: Request) =>
