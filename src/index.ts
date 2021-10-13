@@ -1,4 +1,4 @@
-import { Request, Express } from 'express';
+import { Request, Application } from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import serverSideInclude from 'server-side-include';
 import { getProxyAgent } from './proxy';
@@ -18,7 +18,7 @@ const reversePaths = [
   '/webassets',
 ];
 
-export const setupChrome = (app: Express): void => {
+export const setupChrome = (app: Application): void => {
   const reverseProxy = createProxyMiddleware({
     target: 'https://access.redhat.com',
     changeOrigin: true,
