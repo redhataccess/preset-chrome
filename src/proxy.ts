@@ -1,5 +1,5 @@
-import https, { Agent } from "https";
-import createHttpsProxyAgent, { HttpsProxyAgent } from "https-proxy-agent";
+import https, { Agent } from 'https';
+import createHttpsProxyAgent, { HttpsProxyAgent } from 'https-proxy-agent';
 
 const proxyConfig = {
   http: process.env.http_proxy || process.env.HTTP_PROXY,
@@ -15,5 +15,5 @@ export const getProxyAgent = (): HttpsProxyAgent | Agent => {
   } catch (error) {
     console.error(error);
   }
-  return  new https.Agent();
+  return new https.Agent();
 };
