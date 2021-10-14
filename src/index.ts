@@ -1,4 +1,4 @@
-import { Request, Application } from 'express';
+import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import serverSideInclude from 'server-side-include';
 import { getProxyAgent } from './proxy';
@@ -18,12 +18,12 @@ const reversePaths = [
   '/webassets',
 ];
 
-export const setupChrome = (app: Application): void => {
+export const setupChrome = (app: express.Application): void => {
   const reverseProxy = createProxyMiddleware({
     target: 'https://access.redhat.com',
     changeOrigin: true,
     agent: getProxyAgent(),
-    router: (req: Request) => {
+    router: (req: express.Request) => {
       const host = req.get('host') || 'localhost';
       const localMatch = host.match(localRegex);
       if (localMatch) {
@@ -35,7 +35,7 @@ export const setupChrome = (app: Application): void => {
   app.use(reversePaths, reverseProxy);
   app.use(
     serverSideInclude({
-      getHost: (req: Request) =>
+      getHost: (req: express.Request) =>
         req.protocol + '://' + (req.get('host') || 'localhost'),
     })
   );
